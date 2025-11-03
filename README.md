@@ -90,6 +90,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Author and maintainer
 **Hayk Davtyan | [@hayk96](https://github.com/hayk96)**# Three-Tier-App-Challenge-with-Docker
-# Three-Tier-App-Challenge-with-Docker
-# Three-Tier-App-with-Docker
-# Three-Tier-App-with-Docker
