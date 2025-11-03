@@ -11,7 +11,7 @@ The stack consists of:
 3. **Database** - a MySQL instance with preloaded data  
 
 #### Architecture
-![](architecture.png)
+![arch.png](./architecture.png)
 
 #### Project Structure
 ```
