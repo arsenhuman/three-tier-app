@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐳 Three-Tier App Challenge with Docker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e6f3ff, #f7f9fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+      color: #2c3e50;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 2rem 2.2rem;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      word-wrap: break-word;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+      color: #0db7ed;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .message {
+      font-size: 1.1rem;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      padding: 0.6rem;
+      border-left: 3px solid #0db7ed;
+      background-color: #f8fafc;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .message.show-emoji::after {
+      content: " 🎉";
+      display: inline-block;
+      font-size: 1rem;
+      animation: tada 1s;
+    }
+
+    .visits {
+      font-size: 1rem;
+      color: #7f8c8d;
+      margin-bottom: 0.8rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .visits.updated {
+      color: #27ae60;
+      animation: pulse 0.4s ease;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+      word-wrap: break-word;
+    }
+
+    @keyframes tada {
+      0% { transform: scale(1); }
+      10%, 20% { transform: scale(0.9) rotate(-3deg); }
+      30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+      40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🐳 Three-Tier App Challenge with Docker</h1>
+    <div id="message" class="message">Loading message...</div>
+    <div id="visits" class="visits">Loading visits...</div>
+    <div id="error" class="error"></div>
+  </div>
+
+  <script>
+    // Keep this localhost if running locally.
+    const backendURL = 'http://localhost:9000/';
+
+    async function fetchData() {
+      try {
+        const res = await fetch(backendURL);
+        const data = await res.json();
+
+        const msgEl = document.getElementById('message');
+        const visitsEl = document.getElementById('visits');
+        const errEl = document.getElementById('error');
+
+        if (data.error) {
+          errEl.innerText = data.error;
+          msgEl.innerText = '-';
+          visitsEl.innerText = '-';
+          msgEl.classList.remove('show-emoji');
+          visitsEl.classList.remove('updated');
+        } else {
+          msgEl.innerText = data.message;
+          msgEl.classList.add('show-emoji');
+
+          visitsEl.innerText = `Visit count: ${data.visits}`;
+          visitsEl.classList.add('updated');
+          errEl.innerText = '';
+
+          setTimeout(() => visitsEl.classList.remove('updated'), 700);
+        }
+      } catch {
+        document.getElementById('error').innerText = 'Failed to fetch from backend';
+        document.getElementById('message').innerText = '-';
+        document.getElementById('visits').innerText = '-';
+      }
+    }
+
+    fetchData();
+    setInterval(fetchData, 5000);
+  </script>
+</body>
+</html>
