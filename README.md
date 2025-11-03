@@ -93,10 +93,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 # Three-Tier-App-Challenge-with-Docker
 # Three-Tier-App-with-Docker
 # Three-Tier-App-with-Docker
-# three-tier-app
-# three-tier-app
-# three-tier-app
-# three-tier-app
-# three-tier-app
-# three-tier-app
-# three-tier-app
